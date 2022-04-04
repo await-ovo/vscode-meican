@@ -1,9 +1,7 @@
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import App from './App';
-import 'tailwindcss/base.css';
-import 'tailwindcss/components.css';
-import 'tailwindcss/utilities.css';
+import 'windi.css';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -11,6 +9,11 @@ const GlobalStyle = createGlobalStyle`
     padding-right: 0;
     height: 100vh;
     width: 100vw;
+  }
+
+  #root {
+    height: 100%;
+    width: 100%;
   }
 `;
 

@@ -6,7 +6,7 @@ export const MAIN_PANEL_TITLE = '美餐';
 
 export const OPEN_MEICAN_COMMAND = 'meican.open';
 
-export const API_BASE_URL = 'https:://meican.com';
+export const API_BASE_URL = 'https://meican.com';
 
 export const DEFAULT_TIMEOUT = 1500;
 

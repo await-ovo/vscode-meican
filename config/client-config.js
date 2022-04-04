@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const tailwindConfig = require('./tailwind.config');
+const WindiCSSWebpackPlugin = require('windicss-webpack-plugin');
 
 const clientConfig = {
   name: 'client',
@@ -42,7 +42,6 @@ const clientConfig = {
                 ident: 'postcss',
                 config: false,
                 plugins: [
-                  ['tailwindcss', tailwindConfig],
                   'postcss-flexbugs-fixes',
                   [
                     'postcss-preset-env',
@@ -92,6 +91,7 @@ const clientConfig = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
+    new WindiCSSWebpackPlugin(),
     new MiniCssExtractPlugin(),
   ],
   cache: {

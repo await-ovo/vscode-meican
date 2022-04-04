@@ -16,9 +16,9 @@
 // });
 
 const https = require('https');
-var axios = require('axios');
-var data =
-  'username=SZW589%40sp.bj&loginType=username&password=%21Szw1qa2ws&remember=true&openId=&redirectUrl=';
+// var axios = require('axios');
+// var data =
+//   'username=SZW589%40sp.bj&loginType=username&password=%21Szw1qa2ws&remember=true&openId=&redirectUrl=';
 
 // var config = {
 //   method: 'post',
@@ -70,9 +70,9 @@ const fetch = (...args) =>
 //   username: 'SZW589@sp.bj',
 //   loginType: 'username',
 //   password: '!Szw1qa2ws',
-//   remember: true,
+//   remember: 'true',
 //   openId: '',
-//   redirectUrl: 'https://meican.com',
+//   redirectUrl: '',
 // });
 
 // fetch('https://meican.com/account/directlogin', {
@@ -107,11 +107,11 @@ const fetch = (...args) =>
 //     console.log(error);
 //   });
 
-const rc = `remember=5a80d8e07d2890c26e8c329a6acf929e465ecb66-7615·32; PLAY_FLASH=%22from%3Dnull%26success%3D%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F%22; PLAY_ERRORS=; PLAY_SESSION=%2213c2c352a3b5b211b4a29a706f227928ea5d7770-userId%3D7615132%22; machineId=387cacdb-2a58-49b1-b4dd-32fed2641754; guestId=0ebb93d0-e22d-461f-b0bd-bdc59636a2c0 `;
+const rc = `M_distinctid=17feb06423adbb-0819b6834fdddf-113f645d-1fa400-17feb06423baf5; cna=2d0ee86f25524d9e866a06ade47a73a4; machineId=4e8aaa25-93b7-46dd-8321-35bca1252c05; guestId=822560b9-1684-4382-873f-c72ec2ce11b9; __utmz=1.1648915538.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmc=1; CNZZDATA1259914292=1161505175-1648913502-%7C1649067898; __utma=1.1399811130.1648915538.1649058694.1649068459.4; __utmt=1; __utmb=1.1.10.1649068459; remember=5a80d8e07d2890c26e8c329a6acf929e465ecb66-7615132; PLAY_FLASH="from=null&success=%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F"; PLAY_SESSION="13c2c352a3b5b211b4a29a706f227928ea5d7770-userId=7615132"`;
 
 fetch(
   // `client_id=88&client_secret=5555`,
-  `https://meican.com/preorder/api/v2.1/calendaritems/list?withOrderDetail=false&beginDate=2022-03-31&endDate=2022-03-31&client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=3`,
+  `https://meican.com/preorder/api/v2.1/calendaritems/list?withOrderDetail=false&beginDate=2022-04-04&endDate=2022-03-31&client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E`,
   // `https://meican.com/forward/api/v2.1/accounts/show?client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E`,
   // 'https://meican.com/forward/api/v2.1/accounts/show?client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E&client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E',
   // 'https://meican.com',
@@ -128,10 +128,10 @@ fetch(
   },
 ).then(
   res => {
-    res.json().then(d => {
-      console.log(`fetch api response \n`);
-      console.log(d);
-    });
+    // res.json().then(d => {
+    //   console.log(`fetch api response \n`);
+    //   console.log(d);
+    // });
     console.log(res.headers);
     console.log(`status -->`, res.status);
     res.text().then(d => console.log(`text\n`, d));

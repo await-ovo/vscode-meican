@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
 import * as services from './services';
 import { serviceStorage } from './context';
-import { MessageType, MethodType } from './services';
+import { MessageType, MethodType } from './types';
 import { GLOBAL_COOKIE_KEY } from '../common/constants';
 import type { ExtensionContext, WebviewPanel } from 'vscode';
-import type { Message, MessageResponse } from './services';
+import type { Message, MessageResponse } from './types';
 
 const redirect = async (panel: WebviewPanel, to: string) => {
   panel.webview.postMessage({
@@ -22,7 +22,7 @@ export const initService = (panel: WebviewPanel, context: ExtensionContext) => {
   }
 
   panel.webview.onDidReceiveMessage((message: Message) => {
-    const { type, method, params } = message;
+    const { type, method, params, id } = message;
     if (type === MessageType.api) {
       if (services[method]) {
         serviceStorage.run(
@@ -32,7 +32,7 @@ export const initService = (panel: WebviewPanel, context: ExtensionContext) => {
           },
           async () => {
             try {
-              let resp: MessageResponse | null = null;
+              let resp: Omit<MessageResponse, 'type' | 'id'> | null = null;
               switch (method) {
                 case MethodType.login: {
                   resp = await services[MethodType.login](params);
@@ -44,7 +44,11 @@ export const initService = (panel: WebviewPanel, context: ExtensionContext) => {
                 }
               }
               if (resp) {
-                panel.webview.postMessage(resp);
+                panel.webview.postMessage({
+                  id,
+                  type: MessageType.res,
+                  ...resp,
+                });
               }
             } catch (err) {
               vscode.window.showErrorMessage(`${err}`);

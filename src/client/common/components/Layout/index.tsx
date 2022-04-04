@@ -15,9 +15,9 @@ const Layout = () => {
   const activeMenu = findActiveMenu(pathname);
 
   return (
-    <div className="xl:container flex">
+    <div className="flex w-full h-full text-zinc-300">
       {activeMenu && (
-        <div className="flex flex-col items-center w-20 h-screen py-6 bg-slate-800">
+        <div className="flex flex-col items-center w-20 h-screen bg-slate-800 py-6">
           <img src={logo} className="w-12 h-12" />
 
           <div className="w-20 flex flex-1 flex-col  mt-6">

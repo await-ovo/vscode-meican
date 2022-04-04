@@ -1,4 +1,5 @@
-import type { MessageResponse, MethodType } from './types';
+import type { MethodType, CalendarItemStatus } from './types';
+import { fetch } from '@/common/fetch';
 
 export type CalendarItemsRequestMessage = {
   method: MethodType.calendarItems;
@@ -8,45 +9,56 @@ export type CalendarItemsRequestMessage = {
   };
 };
 
-export enum CalendarItemStatus {
-  notYet = 'NOT_YET',
-  available = 'AVAILABLE',
-  closed = 'CLOSED',
-}
+export type CalendarItem = {
+  title: string;
+  userTab: {
+    corp: {
+      uniqueId: string;
+      useCloset: boolean;
+      name: string;
+      namespace: string;
+      alwaysOpen: boolean;
+      addressList: {
+        uniqueId: string;
+        address: string;
+        corpAddressCode: string;
+        pickUpLocation: string;
+      }[];
+      isAdmin: boolean;
+    };
+    name: string;
+    lastUsedTime: number;
+    uniqueId: string;
+  };
+  openingTime: {
+    name: string;
+    openTime: string;
+    closeTime: string;
+    postboxOpenTime: string;
+  };
+  corpOrderUser: null;
+  status: CalendarItemStatus;
+  reason: string;
+};
 
 export type CalendarItemsResponse = {
   data?: {
-    calendarItemList: Array<{
-      title: string;
-      userTab: {
-        corp: {
-          uniqueId: string;
-          useCloset: boolean;
-          name: string;
-          namespace: string;
-          alwaysOpen: boolean;
-          addressList: {
-            uniqueId: string;
-            address: string;
-            corpAddressCode: string;
-            pickUpLocation: string;
-          }[];
-          isAdmin: boolean;
-        };
-        name: string;
-        lastUsedTime: number;
-        uniqueId: string;
-      };
-      openingTime: {};
-      corpOrderUser: null;
-      status: CalendarItemStatus;
-      reason: string;
+    startDate: string;
+    endDate: string;
+    dateList: Array<{
+      date: string;
+      calendarItemList: Array<CalendarItem>;
     }>;
   };
 };
 
 export const calendarItems = async (
   params: CalendarItemsRequestMessage['params'],
-): Promise<MessageResponse> => {
-  return { success: true };
-};
+) =>
+  fetch({
+    url: 'preorder/api/v2.1/calendaritems/list',
+    params: {
+      withOrderDetail: false,
+      ...params,
+    },
+  });
