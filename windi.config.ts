@@ -12,17 +12,19 @@ export default defineConfig({
     container: {
       center: true,
     },
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      yellow: {
-        100: 'rgb(167 205 69)',
-      },
-      slate: {
-        800: '#252525',
-        700: '#2b2b2b',
-        600: '#333',
-        500: '#393939',
+    extend: {
+      colors: {
+        transparent: 'transparent',
+        current: 'currentColor',
+        yellow: {
+          100: 'rgb(167 205 69)',
+        },
+        slate: {
+          800: '#252525',
+          700: '#2b2b2b',
+          600: '#333',
+          500: '#393939',
+        },
       },
     },
   },

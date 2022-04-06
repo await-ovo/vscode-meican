@@ -7,48 +7,52 @@ import { CalendarItemStatus } from '@/service/types';
 import CalendarMenuItem from '@/client/common/components/CalendarMenuItem';
 import Dishes from '@/client/common/components/Dishes';
 import OrderDetail from '@/client/common/components/OrderDetail';
+import Empty from '@/client/common/components/Empty';
 
 const Home = () => {
   const [calendarItems, setCalendarItems] = useState<Array<CalendarItem>>([]);
+  const [loading, setLoading] = useState(false);
 
-  const [activeCalenderItem, setActiveCalendarItem] = useState<
+  const [activeCalendarItem, setActiveCalendarItem] = useState<
     CalendarItem | undefined
   >(undefined);
 
   const currentDate = dayjs(new Date().getTime()).format('YYYY-MM-DD');
 
   useEffect(() => {
-    const fetchCalenderItems = async () => {
-      const { data, success, message } = await getCalendarItems({
-        beginDate: currentDate,
-        endDate: currentDate,
+    const fetchCalendarItems = async () => {
+      setLoading(true);
+
+      const { data, success } = await getCalendarItems({
+        // beginDate: currentDate,
+        // endDate: currentDate,
+        beginDate: '2022-04-06',
+        endDate: '2022-04-06',
       });
 
-      if (!success) {
-        toast.error(message);
-      }
+      setLoading(false);
 
       console.log(`data --->`, data);
 
-      const items = data?.dateList?.[0].calendarItemList;
+      if (success) {
+        const items = data?.dateList?.[0].calendarItemList;
 
-      if (items) {
-        setCalendarItems(items);
+        if (items) {
+          setCalendarItems(items);
 
-        setActiveCalendarItem(
-          items.find(item => (item.status = CalendarItemStatus.available)),
-        );
+          setActiveCalendarItem(items[0]);
+        }
       }
     };
 
-    fetchCalenderItems();
+    fetchCalendarItems();
   }, []);
 
   return (
     <div className="flex w-full">
       <div className="bg-slate-700 w-96">
-        <p className="text-lg flex items-center justify-center py-0 px-0 h-16">
-          美餐 - <span className="text-yellow-100">{currentDate}</span>
+        <p className="text-lg flex items-center justify-center py-0 px-0 h-16 text-yellow-100 border-b-1 border-zinc-800">
+          美餐 - {currentDate}
         </p>
         <div className="">
           {calendarItems.map(item => (
@@ -57,7 +61,7 @@ const Home = () => {
               info={item}
               onSelect={selected => setActiveCalendarItem(selected)}
               active={
-                activeCalenderItem?.userTab.uniqueId === item.userTab.uniqueId
+                activeCalendarItem?.userTab.uniqueId === item.userTab.uniqueId
               }
             />
           ))}
@@ -67,8 +71,28 @@ const Home = () => {
         <p className="text-base text-yellow-100 py-0 px-0 h-16 flex items-center justify-center bg-slate-800">
           快捷点餐
         </p>
-        <div className="flex-1 bg-slate-600">
-          <span>empty</span>
+        <div className="flex-1 bg-slate-600 flex justify-center items-center">
+          {loading ? (
+            <p>loading</p>
+          ) : !activeCalendarItem ? (
+            <Empty />
+          ) : activeCalendarItem.corpOrderUser ? (
+            <OrderDetail
+              uniqueId={activeCalendarItem.corpOrderUser.uniqueId}
+              restaurantItemList={
+                activeCalendarItem.corpOrderUser.restaurantItemList
+              }
+            />
+          ) : activeCalendarItem.status !== CalendarItemStatus.available ? (
+            <Empty />
+          ) : (
+            <Dishes
+              tabUniqueId={activeCalendarItem.userTab.uniqueId}
+              targetTime={dayjs(activeCalendarItem.targetTime).format(
+                `YYYY-MM-DD+HH:mm`,
+              )}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import type { Message } from '@/service/types';
 import { MessageType } from '@/service/types';
 
@@ -10,10 +11,15 @@ const callbacks: Record<
   }
 > = {};
 
-window.addEventListener('message', ({ data: message }) => {
-  const { type, id } = message;
+window.addEventListener('message', ({ data }) => {
+  const { type, id, success, message } = data;
+
+  if (!success) {
+    toast.error(message);
+  }
+
   if (type === MessageType.res && callbacks.hasOwnProperty(id)) {
-    callbacks[id].resolve(message);
+    callbacks[id].resolve(data);
   }
 });
 

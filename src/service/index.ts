@@ -42,6 +42,13 @@ export const initService = (panel: WebviewPanel, context: ExtensionContext) => {
                   resp = await services[MethodType.calendarItems](params);
                   break;
                 }
+                case MethodType.dishes: {
+                  resp = await services[MethodType.dishes](params);
+                  break;
+                }
+                case MethodType.orderDetail: {
+                  resp = await services[MethodType.orderDetail](params);
+                }
               }
               if (resp) {
                 panel.webview.postMessage({

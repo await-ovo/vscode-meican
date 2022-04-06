@@ -16,7 +16,7 @@ const CalendarMenuItem = ({
   return (
     <div
       className={cls(
-        'flex items-center p-6 justify-between cursor-pointer hover:bg-slate-500 text-zinc-500',
+        'flex items-center p-6 justify-between cursor-pointer hover:bg-slate-500 text-stone-200',
         {
           'bg-slate-500': active,
         },
@@ -25,7 +25,10 @@ const CalendarMenuItem = ({
         onSelect(info);
       }}>
       <div className="flex flex-col">
-        <span className="text-3xl font-bold mb-2.5">
+        <span
+          className={cls('text-3xl font-bold mb-2.5', {
+            'text-yellow-100': info.status === CalendarItemStatus.available,
+          })}>
           {info.openingTime.postboxOpenTime}
         </span>
         <span className="text-sm">{info.title}</span>

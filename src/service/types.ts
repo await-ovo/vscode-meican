@@ -1,13 +1,25 @@
+import type { DishesResponse, DishesRequestMessage, Dish } from './dishes';
 import type {
   CalendarItemsRequestMessage,
   CalendarItemsResponse,
   CalendarItem,
 } from './calendar-items';
 import type { LoginRequestMessage, LoginResponse, LoginParams } from './login';
+import type {
+  OrderDetailResponse,
+  OrderDetailRequestMessage,
+  RestaurantItem,
+  OrderInfo,
+} from './order-detail';
 
 export enum MethodType {
   login = 'login',
   calendarItems = 'calendarItems',
+  dishes = 'dishes',
+  order = 'order',
+  deleteOrder = 'deleteOrder',
+  accounts = 'accounts',
+  orderDetail = 'orderDetail',
 }
 
 export enum MessageType {
@@ -20,12 +32,22 @@ export type MessageResponse = {
   type: MessageType.res;
   success: boolean;
   message?: string;
-} & (LoginResponse | CalendarItemsResponse);
+} & (
+  | LoginResponse
+  | CalendarItemsResponse
+  | DishesResponse
+  | OrderDetailResponse
+);
 
 export type Message = {
   id: string;
   type: MessageType.api;
-} & (LoginRequestMessage | CalendarItemsRequestMessage);
+} & (
+  | LoginRequestMessage
+  | CalendarItemsRequestMessage
+  | DishesRequestMessage
+  | OrderDetailRequestMessage
+);
 
 export type ApiResponse<T> = Omit<
   Extract<MessageResponse, T & Pick<MessageResponse, 'success' | 'message'>>,
@@ -45,4 +67,11 @@ export type {
   LoginRequestMessage,
   LoginResponse,
   LoginParams,
+  DishesRequestMessage,
+  DishesResponse,
+  Dish,
+  OrderDetailRequestMessage,
+  OrderDetailResponse,
+  RestaurantItem,
+  OrderInfo,
 };

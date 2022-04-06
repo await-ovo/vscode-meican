@@ -1,4 +1,4 @@
-import type { MethodType, CalendarItemStatus } from './types';
+import type { MethodType, CalendarItemStatus, RestaurantItem } from './types';
 import { fetch } from '@/common/fetch';
 
 export type CalendarItemsRequestMessage = {
@@ -10,6 +10,7 @@ export type CalendarItemsRequestMessage = {
 };
 
 export type CalendarItem = {
+  targetTime: number;
   title: string;
   userTab: {
     corp: {
@@ -36,7 +37,10 @@ export type CalendarItem = {
     closeTime: string;
     postboxOpenTime: string;
   };
-  corpOrderUser: null;
+  corpOrderUser: null | {
+    uniqueId: string;
+    restaurantItemList: RestaurantItem[];
+  };
   status: CalendarItemStatus;
   reason: string;
 };

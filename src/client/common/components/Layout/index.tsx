@@ -15,7 +15,7 @@ const Layout = () => {
   const activeMenu = findActiveMenu(pathname);
 
   return (
-    <div className="flex w-full h-full text-zinc-300">
+    <div className="flex w-full h-full text-stone-200">
       {activeMenu && (
         <div className="flex flex-col items-center w-20 h-screen bg-slate-800 py-6">
           <img src={logo} className="w-12 h-12" />

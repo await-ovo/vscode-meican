@@ -23,11 +23,13 @@ const Login = () => {
       password: password.trim(),
     });
 
-    const { success, message } = res;
+    const { success } = res;
 
     setLoading(false);
 
-    success ? history.push(PAGE_ROUTE_URL.profile) : toast.error(message);
+    if (success) {
+      history.push(PAGE_ROUTE_URL.profile);
+    }
   };
 
   return (

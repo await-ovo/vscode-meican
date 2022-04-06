@@ -64,7 +64,9 @@ export const fetch = async ({
     headers: reqHeaders,
   });
 
-  if (res.headers.get('content-type') !== 'application/json') {
+  out.appendLine(`res headers --> ${res.headers.get('content-type')}`);
+
+  if (!res.headers.get('content-type')?.includes('application/json')) {
     return {
       success: false,
       message: `api ${url} 返回数据格式不正确, 请检查参数是否正确.`,
