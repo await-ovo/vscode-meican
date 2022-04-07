@@ -5,6 +5,7 @@ import { MessageType, MethodType } from './types';
 import { GLOBAL_COOKIE_KEY } from '../common/constants';
 import type { ExtensionContext, WebviewPanel } from 'vscode';
 import type { Message, MessageResponse } from './types';
+import { refreshWebview } from '@/panel';
 
 const redirect = async (panel: WebviewPanel, to: string) => {
   panel.webview.postMessage({
@@ -48,6 +49,11 @@ export const initService = (panel: WebviewPanel, context: ExtensionContext) => {
                 }
                 case MethodType.orderDetail: {
                   resp = await services[MethodType.orderDetail](params);
+                  break;
+                }
+                case MethodType.order: {
+                  resp = await services[MethodType.order](params);
+                  break;
                 }
               }
               if (resp) {
@@ -63,6 +69,8 @@ export const initService = (panel: WebviewPanel, context: ExtensionContext) => {
           },
         );
       }
+    } else if (type === MessageType.refresh) {
+      refreshWebview(context);
     }
   });
 };

@@ -1,8 +1,10 @@
+import type { OrderRequestMessage, OrderResponse } from './order';
 import type { DishesResponse, DishesRequestMessage, Dish } from './dishes';
 import type {
   CalendarItemsRequestMessage,
   CalendarItemsResponse,
   CalendarItem,
+  Address,
 } from './calendar-items';
 import type { LoginRequestMessage, LoginResponse, LoginParams } from './login';
 import type {
@@ -25,6 +27,7 @@ export enum MethodType {
 export enum MessageType {
   api = 'api-request',
   res = 'api-response',
+  refresh = 'refresh-webview',
 }
 
 export type MessageResponse = {
@@ -37,16 +40,19 @@ export type MessageResponse = {
   | CalendarItemsResponse
   | DishesResponse
   | OrderDetailResponse
+  | OrderResponse
 );
 
 export type Message = {
   id: string;
-  type: MessageType.api;
+  type: MessageType.api | MessageType.refresh;
 } & (
   | LoginRequestMessage
   | CalendarItemsRequestMessage
   | DishesRequestMessage
   | OrderDetailRequestMessage
+  | OrderRequestMessage
+  | never
 );
 
 export type ApiResponse<T> = Omit<
@@ -58,12 +64,14 @@ export enum CalendarItemStatus {
   notYet = 'NOT_YET',
   available = 'AVAILABLE',
   closed = 'CLOSED',
+  order = 'ORDER',
 }
 
 export type {
   CalendarItemsRequestMessage,
   CalendarItemsResponse,
   CalendarItem,
+  Address,
   LoginRequestMessage,
   LoginResponse,
   LoginParams,
@@ -74,4 +82,6 @@ export type {
   OrderDetailResponse,
   RestaurantItem,
   OrderInfo,
+  OrderRequestMessage,
+  OrderResponse,
 };

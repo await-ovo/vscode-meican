@@ -1,11 +1,12 @@
 import path from 'path';
+import { create } from 'domain';
 import * as vscode from 'vscode';
 import { MAIN_PANEL_NAME, MAIN_PANEL_TITLE } from './common/constants';
 import type { WebviewPanel, ExtensionContext } from 'vscode';
 
 let currentPanel: WebviewPanel | undefined;
 
-const getWebViewContent = (context: ExtensionContext) => `
+const getWebViewContent = (context: ExtensionContext, timestamp?: number) => `
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -20,6 +21,7 @@ const getWebViewContent = (context: ExtensionContext) => `
   </head>
   <body>
     <div id="root"></div>
+    ${timestamp ? `<div style="display:none">${timestamp}</div>` : ''}
     <script src="vscode-resource:${path.join(
       context.extensionPath,
       './dist/client.js',
@@ -53,4 +55,13 @@ export const createPanel = (context: ExtensionContext) => {
   });
 
   return currentPanel;
+};
+
+export const refreshWebview = (context: ExtensionContext) => {
+  if (currentPanel) {
+    currentPanel.webview.html = getWebViewContent(
+      context,
+      new Date().getTime(),
+    );
+  }
 };

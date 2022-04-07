@@ -1,8 +1,7 @@
 import { toast } from 'react-toastify';
+import { vscode } from './vscode';
 import type { Message } from '@/service/types';
 import { MessageType } from '@/service/types';
-
-const vscode = acquireVsCodeApi();
 
 const callbacks: Record<
   string,

@@ -1,4 +1,5 @@
 import cls from 'classnames';
+import { statusTextlMap } from '../../utils';
 import { CalendarItem, CalendarItemStatus } from '@/service/types';
 import rightArrowIcon from '@/client/common/assets/right-arrow.svg';
 
@@ -37,14 +38,10 @@ const CalendarMenuItem = ({
         <span
           className={cls('text-xs mr-2.5', {
             'text-yellow-100':
-              info.corpOrderUser ||
+              info.status === CalendarItemStatus.order ||
               info.status === CalendarItemStatus.available,
           })}>
-          {info.corpOrderUser
-            ? '已下单'
-            : info.status === CalendarItemStatus.available
-            ? '可点单'
-            : '已关闭'}
+          {statusTextlMap[info.status]}
         </span>
         <img src={rightArrowIcon} className="h-3 w-3" />
       </div>

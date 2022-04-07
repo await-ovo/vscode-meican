@@ -2,6 +2,7 @@ import orderIcon from '@/client/common/assets/order-icon.svg';
 import profileIcon from '@/client/common/assets/profile-icon.svg';
 import orderActiveIcon from '@/client/common/assets/order-active-icon.svg';
 import profileActiveIcon from '@/client/common/assets/profile-active-icon.svg';
+import { CalendarItemStatus } from '@/service/types';
 
 export const PAGE_ROUTE_URL = {
   login: '/login',
@@ -29,3 +30,10 @@ export const SIDE_MENUS = [
     active: false,
   },
 ];
+
+export const statusTextlMap = {
+  [CalendarItemStatus.available]: '可点单',
+  [CalendarItemStatus.notYet]: '未开放',
+  [CalendarItemStatus.order]: '已收单',
+  [CalendarItemStatus.closed]: '已关闭',
+};

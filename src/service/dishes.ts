@@ -14,6 +14,7 @@ export type Dish = {
   id: number;
   name: string;
   isSection: boolean;
+  priceString: string;
   restaurant: {
     name: string;
     uniqueId: string;

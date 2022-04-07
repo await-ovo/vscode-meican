@@ -9,6 +9,13 @@ export type CalendarItemsRequestMessage = {
   };
 };
 
+export type Address = {
+  uniqueId: string;
+  address: string;
+  corpAddressCode: string;
+  pickUpLocation: string;
+};
+
 export type CalendarItem = {
   targetTime: number;
   title: string;
@@ -19,13 +26,10 @@ export type CalendarItem = {
       name: string;
       namespace: string;
       alwaysOpen: boolean;
-      addressList: {
-        uniqueId: string;
-        address: string;
-        corpAddressCode: string;
-        pickUpLocation: string;
-      }[];
+      addressList: Address[];
       isAdmin: boolean;
+      priceVisible: boolean;
+      showPrice: boolean;
     };
     name: string;
     lastUsedTime: number;

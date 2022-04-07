@@ -24,10 +24,8 @@ const Home = () => {
       setLoading(true);
 
       const { data, success } = await getCalendarItems({
-        // beginDate: currentDate,
-        // endDate: currentDate,
-        beginDate: '2022-04-06',
-        endDate: '2022-04-06',
+        beginDate: currentDate,
+        endDate: currentDate,
       });
 
       setLoading(false);
@@ -46,15 +44,15 @@ const Home = () => {
     };
 
     fetchCalendarItems();
-  }, []);
+  }, [currentDate]);
 
   return (
     <div className="flex w-full">
       <div className="bg-slate-700 w-96">
-        <p className="text-lg flex items-center justify-center py-0 px-0 h-16 text-yellow-100 border-b-1 border-zinc-800">
+        <p className="text-lg flex items-center justify-center py-0 px-0 h-16 border-b-1 border-zinc-800">
           美餐 - {currentDate}
         </p>
-        <div className="">
+        <div>
           {calendarItems.map(item => (
             <CalendarMenuItem
               key={item?.userTab.uniqueId}
@@ -67,11 +65,11 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col flex-1 bg-slate-600">
-        <p className="text-base text-yellow-100 py-0 px-0 h-16 flex items-center justify-center bg-slate-800">
+      <div className="flex flex-col flex-1 bg-slate-600 transform-gpu">
+        <p className="text-base  py-0 px-0 h-16 flex items-center justify-center bg-slate-800 flex-shrink-0">
           快捷点餐
         </p>
-        <div className="flex-1 bg-slate-600 flex justify-center items-center">
+        <div className="flex-1 bg-slate-600 flex justify-center overflow-y-scroll">
           {loading ? (
             <p>loading</p>
           ) : !activeCalendarItem ? (
@@ -91,6 +89,8 @@ const Home = () => {
               targetTime={dayjs(activeCalendarItem.targetTime).format(
                 `YYYY-MM-DD+HH:mm`,
               )}
+              showPrice={activeCalendarItem.userTab.corp.showPrice}
+              addressList={activeCalendarItem.userTab.corp.addressList}
             />
           )}
         </div>

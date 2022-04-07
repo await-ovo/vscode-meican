@@ -6,7 +6,14 @@
     "sourceType": "module"
   },
   "extends": ["prettier"],
-  "plugins": ["@typescript-eslint", "react", "import", "prettier", "filenames"],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "import",
+    "prettier",
+    "filenames",
+    "react-hooks"
+  ],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -73,13 +80,23 @@
         "beforeClosing": "never"
       }
     ],
+    "react/jsx-key": [
+      "error",
+      {
+        "checkKeyMustBeforeSpread": true,
+        "warnOnDuplicates": true,
+        "checkFragmentShorthand": true
+      }
+    ],
     "react/self-closing-comp": [
       "error",
       {
         "component": true,
         "html": true
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error"
   },
   "ignorePatterns": ["out", "dist", "**/*.d.ts"]
 }
