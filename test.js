@@ -111,10 +111,10 @@ const rc = `M_distinctid=17feb06423adbb-0819b6834fdddf-113f645d-1fa400-17feb0642
 
 fetch(
   // `client_id=88&client_secret=5555`,
-  `https://meican.com/preorder/api/v2.1/calendaritems/list?withOrderDetail=false&beginDate=2022-04-04&endDate=2022-03-31&client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E`,
+  // `https://meican.com/preorder/api/v2.1/calendaritems/list?withOrderDetail=false&beginDate=2022-04-04&endDate=2022-03-31&client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E`,
   // `https://meican.com/forward/api/v2.1/accounts/show?client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E`,
   // 'https://meican.com/forward/api/v2.1/accounts/show?client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E&client_id=Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD&client_secret=vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E',
-  // 'https://meican.com',
+  'https://meican.com',
   {
     method: 'GET',
     // redirect: 'manual',

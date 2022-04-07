@@ -1,3 +1,4 @@
+import type { AccountResponse } from './account';
 import type { OrderRequestMessage, OrderResponse } from './order';
 import type { DishesResponse, DishesRequestMessage, Dish } from './dishes';
 import type {
@@ -20,7 +21,7 @@ export enum MethodType {
   dishes = 'dishes',
   order = 'order',
   deleteOrder = 'deleteOrder',
-  accounts = 'accounts',
+  account = 'account',
   orderDetail = 'orderDetail',
 }
 
@@ -41,6 +42,7 @@ export type MessageResponse = {
   | DishesResponse
   | OrderDetailResponse
   | OrderResponse
+  | AccountResponse
 );
 
 export type Message = {
@@ -52,7 +54,10 @@ export type Message = {
   | DishesRequestMessage
   | OrderDetailRequestMessage
   | OrderRequestMessage
-  | never
+  | {
+      method: MethodType.account;
+      params: void;
+    }
 );
 
 export type ApiResponse<T> = Omit<
@@ -84,4 +89,5 @@ export type {
   OrderInfo,
   OrderRequestMessage,
   OrderResponse,
+  AccountResponse,
 };

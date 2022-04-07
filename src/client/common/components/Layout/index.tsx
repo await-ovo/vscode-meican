@@ -21,7 +21,7 @@ const Layout = () => {
           <img src={logo} className="w-12 h-12" />
 
           <div className="w-20 flex flex-1 flex-col  mt-6">
-            {SIDE_MENUS.map(({ url, label, icon, active }) => (
+            {SIDE_MENUS.map(({ url, label, icon }) => (
               <MenuItem
                 label={label}
                 url={url}
@@ -33,7 +33,7 @@ const Layout = () => {
           </div>
         </div>
       )}
-      <div className="flex flex-1">
+      <div className="flex flex-1 bg-slate-500">
         <Outlet />
       </div>
     </div>

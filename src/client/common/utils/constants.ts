@@ -18,7 +18,6 @@ export const SIDE_MENUS = [
       default: orderIcon,
       active: orderActiveIcon,
     },
-    active: true,
   },
   {
     label: '我的',
@@ -27,11 +26,10 @@ export const SIDE_MENUS = [
       default: profileIcon,
       active: profileActiveIcon,
     },
-    active: false,
   },
 ];
 
-export const statusTextlMap = {
+export const statusTextMap = {
   [CalendarItemStatus.available]: '可点单',
   [CalendarItemStatus.notYet]: '未开放',
   [CalendarItemStatus.order]: '已收单',

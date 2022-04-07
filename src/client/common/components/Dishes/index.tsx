@@ -3,7 +3,14 @@ import dayjs from 'dayjs';
 import DishItem from './DishItem';
 import SelectAddress from '../SelectAddress';
 import { vscode } from '../../utils';
-import type { Address, Dish } from '@/service/types';
+import { useRequest } from '../../utils/useRequest';
+import Loading from '../Loading';
+import type {
+  Address,
+  Dish,
+  DishesRequestMessage,
+  DishesResponse,
+} from '@/service/types';
 import { MessageType } from '@/service/types';
 import { addOrder } from '@/client/common/api';
 import { getDishes } from '@/client/common/api/getDishes';
@@ -48,51 +55,58 @@ const Dishes = ({
     // }
   };
 
+  const { data: dishesRes, loading } = useRequest<
+    DishesRequestMessage['params'],
+    DishesResponse
+  >(
+    getDishes,
+    {
+      tabUniqueId,
+      targetTime,
+    },
+    `${tabUniqueId}-${targetTime}`,
+  );
+
   useEffect(() => {
-    const fetchDishes = async () => {
-      const { data, success } = await getDishes({
-        tabUniqueId,
-        targetTime,
-      });
-
-      if (success) {
-        console.log(`dishes --->`, data?.othersRegularDishList ?? []);
-        setRestaurantDishes(
-          (data?.othersRegularDishList ?? []).reduce<Record<string, Dish[]>>(
-            (memo, current) => {
-              const { name: restaurantName } = current.restaurant;
-              if (memo[restaurantName]) {
-                memo[restaurantName].push(current);
-              } else {
-                memo[restaurantName] = [current];
-              }
-              return memo;
-            },
-            {},
-          ),
-        );
-      }
-    };
-
-    fetchDishes();
-  }, [tabUniqueId, targetTime]);
+    setRestaurantDishes(
+      (dishesRes?.othersRegularDishList ?? []).reduce<Record<string, Dish[]>>(
+        (
+          memo: { [x: string]: any[] },
+          current: { restaurant: { name: any } },
+        ) => {
+          const { name: restaurantName } = current.restaurant;
+          if (memo[restaurantName]) {
+            memo[restaurantName].push(current);
+          } else {
+            memo[restaurantName] = [current];
+          }
+          return memo;
+        },
+        {},
+      ),
+    );
+  }, [dishesRes]);
 
   return (
     <div className="w-96  pt-10">
-      {Object.keys(restaurantDishes).map(restaurantName => (
-        <div className="w-full mb-8" key={restaurantName}>
-          <p className="mb-8 font-sm w-full text-center">{restaurantName}</p>
-          {restaurantDishes[restaurantName].map(dish => (
-            <DishItem
-              showPrice={showPrice}
-              dish={dish}
-              key={dish.id}
-              active={activeDish?.id === dish.id}
-              onSelect={v => setActiveDish(v)}
-            />
-          ))}
-        </div>
-      ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        Object.keys(restaurantDishes).map(restaurantName => (
+          <div className="w-full mb-8" key={restaurantName}>
+            <p className="mb-8 font-sm w-full text-center">{restaurantName}</p>
+            {restaurantDishes[restaurantName].map(dish => (
+              <DishItem
+                showPrice={showPrice}
+                dish={dish}
+                key={dish.id}
+                active={activeDish?.id === dish.id}
+                onSelect={v => setActiveDish(v)}
+              />
+            ))}
+          </div>
+        ))
+      )}
       {activeDish && (
         <div className="w-full bg-slate-800 fixed right-0 bottom-0 h-20 flex items-center justify-between px-8">
           <div className="flex items-center">

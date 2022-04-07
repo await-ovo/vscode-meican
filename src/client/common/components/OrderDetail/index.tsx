@@ -1,8 +1,14 @@
-import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { getOrderDetail } from '../../api';
 import { parseDishName } from '../../utils';
-import type { RestaurantItem, OrderInfo } from '@/service/types';
+import { useRequest } from '../../utils/useRequest';
+import Loading from '../Loading';
+import type {
+  RestaurantItem,
+  OrderInfo,
+  OrderDetailRequestMessage,
+  OrderDetailResponse,
+} from '@/service/types';
 
 type OrderDetailProps = {
   restaurantItemList: RestaurantItem[];
@@ -14,33 +20,10 @@ const Divider = () => (
 );
 
 const OrderDetail = ({ uniqueId, restaurantItemList }: OrderDetailProps) => {
-  const [orderInfo, setOrderInfo] = useState<OrderInfo>();
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchInfo = async () => {
-      setLoading(true);
-
-      try {
-        console.log(`sending ---->`);
-        const { data, success } = await getOrderDetail({
-          uniqueId,
-        });
-
-        setLoading(false);
-
-        console.log(`order detail data -->`, data, success);
-
-        if (success) {
-          setOrderInfo(data);
-        }
-      } catch (err) {
-        console.log(`fuck error -->`, err);
-      }
-    };
-
-    fetchInfo();
-  }, [uniqueId]);
+  const { data: orderInfo, loading } = useRequest<
+    OrderDetailRequestMessage['params'],
+    OrderDetailResponse
+  >(getOrderDetail, { uniqueId }, uniqueId);
 
   return (
     <div className="w-96 h-full pt-10">
@@ -67,7 +50,7 @@ const OrderDetail = ({ uniqueId, restaurantItemList }: OrderDetailProps) => {
       <Divider />
       <div className="w-full">
         {loading ? (
-          <p>loading progress</p>
+          <Loading />
         ) : (
           <>
             <div className="p-5 flex items-center">

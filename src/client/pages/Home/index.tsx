@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
-import type { CalendarItem } from '@/service/types';
+import type {
+  CalendarItem,
+  CalendarItemsRequestMessage,
+  CalendarItemsResponse,
+} from '@/service/types';
 import { getCalendarItems } from '@/client/common/api';
 import { CalendarItemStatus } from '@/service/types';
 import CalendarMenuItem from '@/client/common/components/CalendarMenuItem';
 import Dishes from '@/client/common/components/Dishes';
 import OrderDetail from '@/client/common/components/OrderDetail';
 import Empty from '@/client/common/components/Empty';
+import { useRequest } from '@/client/common/utils/useRequest';
+import Loading from '@/client/common/components/Loading';
 
 const Home = () => {
   const [calendarItems, setCalendarItems] = useState<Array<CalendarItem>>([]);
-  const [loading, setLoading] = useState(false);
 
   const [activeCalendarItem, setActiveCalendarItem] = useState<
     CalendarItem | undefined
@@ -19,32 +23,20 @@ const Home = () => {
 
   const currentDate = dayjs(new Date().getTime()).format('YYYY-MM-DD');
 
+  const { data, loading } = useRequest<
+    CalendarItemsRequestMessage['params'],
+    CalendarItemsResponse
+  >(getCalendarItems, { beginDate: '2022-04-07', endDate: '2022-04-07' });
+
   useEffect(() => {
-    const fetchCalendarItems = async () => {
-      setLoading(true);
+    const items = data?.dateList?.[0].calendarItemList;
+    console.log(`请求的 list data ---->`, data);
+    if (items) {
+      setCalendarItems(items);
 
-      const { data, success } = await getCalendarItems({
-        beginDate: currentDate,
-        endDate: currentDate,
-      });
-
-      setLoading(false);
-
-      console.log(`data --->`, data);
-
-      if (success) {
-        const items = data?.dateList?.[0].calendarItemList;
-
-        if (items) {
-          setCalendarItems(items);
-
-          setActiveCalendarItem(items[0]);
-        }
-      }
-    };
-
-    fetchCalendarItems();
-  }, [currentDate]);
+      setActiveCalendarItem(items[0]);
+    }
+  }, [data]);
 
   return (
     <div className="flex w-full">
@@ -53,16 +45,20 @@ const Home = () => {
           美餐 - {currentDate}
         </p>
         <div>
-          {calendarItems.map(item => (
-            <CalendarMenuItem
-              key={item?.userTab.uniqueId}
-              info={item}
-              onSelect={selected => setActiveCalendarItem(selected)}
-              active={
-                activeCalendarItem?.userTab.uniqueId === item.userTab.uniqueId
-              }
-            />
-          ))}
+          {loading ? (
+            <Loading />
+          ) : (
+            calendarItems.map(item => (
+              <CalendarMenuItem
+                key={item?.userTab.uniqueId}
+                info={item}
+                onSelect={selected => setActiveCalendarItem(selected)}
+                active={
+                  activeCalendarItem?.userTab.uniqueId === item.userTab.uniqueId
+                }
+              />
+            ))
+          )}
         </div>
       </div>
       <div className="flex flex-col flex-1 bg-slate-600 transform-gpu">
@@ -71,7 +67,7 @@ const Home = () => {
         </p>
         <div className="flex-1 bg-slate-600 flex justify-center overflow-y-scroll">
           {loading ? (
-            <p>loading</p>
+            <Loading />
           ) : !activeCalendarItem ? (
             <Empty />
           ) : activeCalendarItem.corpOrderUser ? (

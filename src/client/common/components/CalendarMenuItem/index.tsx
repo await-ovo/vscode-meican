@@ -1,5 +1,5 @@
 import cls from 'classnames';
-import { statusTextlMap } from '../../utils';
+import { statusTextMap } from '../../utils';
 import { CalendarItem, CalendarItemStatus } from '@/service/types';
 import rightArrowIcon from '@/client/common/assets/right-arrow.svg';
 
@@ -41,7 +41,7 @@ const CalendarMenuItem = ({
               info.status === CalendarItemStatus.order ||
               info.status === CalendarItemStatus.available,
           })}>
-          {statusTextlMap[info.status]}
+          {statusTextMap[info.status]}
         </span>
         <img src={rightArrowIcon} className="h-3 w-3" />
       </div>

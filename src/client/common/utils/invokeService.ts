@@ -23,7 +23,7 @@ window.addEventListener('message', ({ data }) => {
 });
 
 export const invokeService = <T>(
-  message: Omit<Message, 'type' | 'id'>,
+  message: Partial<Omit<Message, 'type' | 'id'>>,
 ): Promise<T> =>
   new Promise<T>((resolve, reject) => {
     try {

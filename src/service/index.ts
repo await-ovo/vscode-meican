@@ -55,6 +55,10 @@ export const initService = (panel: WebviewPanel, context: ExtensionContext) => {
                   resp = await services[MethodType.order](params);
                   break;
                 }
+                case MethodType.account: {
+                  resp = await services[MethodType.account]();
+                  break;
+                }
               }
               if (resp) {
                 panel.webview.postMessage({
