@@ -15,3 +15,7 @@ export const API_CLIENT_ID = 'Xqr8w0Uk4ciodqfPwjhav5rdxTaYepD';
 export const API_CLIENT_SECRET = 'vD11O6xI9bG3kqYRu9OyPAHkRGxLh4E';
 
 export const GLOBAL_COOKIE_KEY = 'meican.auth-cookie';
+
+export const TIME_TO_ORDER_TIPS = `喂! 三点半了, 订饭先啦~`;
+
+export const NOTIFICATION_ORDER_ACTION = '现在订餐';
