@@ -23,21 +23,26 @@ export const order = async (params: OrderRequestMessage['params']) =>
   fetch({
     method: 'POST',
     url: 'preorder/api/v2.1/orders/add',
+    headers: {
+      'Content-Type': ' application/x-www-form-urlencoded',
+    },
     params: {
       corpAddressRemark: '',
       corpAddressUniqueId: params.addressUniqueId,
       userAddressUniqueId: params.addressUniqueId,
       tabUniqueId: params.tabUniqueId,
       targetTime: params.targetTime,
-      order: {
-        count: 1,
-        dishId: params.dishId,
-      },
-      remarks: [
+      order: JSON.stringify([
+        {
+          count: 1,
+          dishId: params.dishId,
+        },
+      ]),
+      remarks: JSON.stringify([
         {
           dishId: params.dishId,
           remark: '',
         },
-      ],
+      ]),
     },
   });

@@ -11,7 +11,6 @@ export function useRequest<T, U extends Pick<MessageResponse, 'data'>>(
 
   useEffect(
     () => {
-      console.log('fetch ----_>', fn);
       const doFetch = async () => {
         setLoading(true);
 

@@ -26,11 +26,10 @@ const Home = () => {
   const { data, loading } = useRequest<
     CalendarItemsRequestMessage['params'],
     CalendarItemsResponse
-  >(getCalendarItems, { beginDate: '2022-04-07', endDate: '2022-04-07' });
+  >(getCalendarItems, { beginDate: currentDate, endDate: currentDate });
 
   useEffect(() => {
     const items = data?.dateList?.[0].calendarItemList;
-    console.log(`请求的 list data ---->`, data);
     if (items) {
       setCalendarItems(items);
 
@@ -83,7 +82,7 @@ const Home = () => {
             <Dishes
               tabUniqueId={activeCalendarItem.userTab.uniqueId}
               targetTime={dayjs(activeCalendarItem.targetTime).format(
-                `YYYY-MM-DD+HH:mm`,
+                `YYYY-MM-DD HH:mm`,
               )}
               showPrice={activeCalendarItem.userTab.corp.showPrice}
               addressList={activeCalendarItem.userTab.corp.addressList}

@@ -31,7 +31,7 @@ export const fetch = async ({
 }: {
   method?: 'GET' | 'POST';
   url: string;
-  params: Record<string, unknown>;
+  params: Record<string, string>;
   headers?: HeadersInit;
 }): Promise<FetchResponse> => {
   const { context } = serviceStorage.getStore()!;
@@ -52,19 +52,19 @@ export const fetch = async ({
       client_id: API_CLIENT_ID,
       client_secret: API_CLIENT_SECRET,
     })}`;
+  } else if (reqMethod === 'POST') {
+    reqUrl = `${url}?${new URLSearchParams({
+      client_id: API_CLIENT_ID,
+      client_secret: API_CLIENT_SECRET,
+    })}`;
   }
-
-  const out = vscode.window.createOutputChannel('mei-can');
-
-  out.appendLine(`request url --> ${API_BASE_URL}/${reqUrl}`);
 
   const res = await nodeFetch(`${API_BASE_URL}/${reqUrl}`, {
     ...defaultRequestInit,
     method: reqMethod,
     headers: reqHeaders,
+    body: reqMethod === 'POST' ? new URLSearchParams(params) : undefined,
   });
-
-  out.appendLine(`res headers --> ${res.headers.get('content-type')}`);
 
   if (!res.headers.get('content-type')?.includes('application/json')) {
     return {

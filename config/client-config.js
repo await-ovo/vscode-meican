@@ -5,7 +5,7 @@ const WindiCSSWebpackPlugin = require('windicss-webpack-plugin');
 
 const clientConfig = {
   name: 'client',
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   entry: path.resolve(__dirname, '../src/client/index.tsx'),
   output: {
     path: path.resolve(__dirname, '../dist'),

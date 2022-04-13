@@ -36,23 +36,19 @@ const Dishes = ({
   const [selectAddressVisible, setSelectAddressVisible] = useState(false);
 
   const handleOrder = async (address: Address) => {
-    console.log(`提交订单--->`, address);
-    // const { success } = await addOrder({
-    //   addressUniqueId: address.uniqueId,
-    //   targetTime: dayjs(targetTime).format('YYYY-MM-DD HH:mm'),
-    //   dishId: activeDish!.id,
-    //   tabUniqueId,
-    // });
-    await vscode.postMessage({
-      type: MessageType.refresh,
+    const { success } = await addOrder({
+      addressUniqueId: address.uniqueId,
+      targetTime,
+      dishId: activeDish!.id,
+      tabUniqueId,
     });
 
-    setSelectAddressVisible(false);
-
-    // if (success) {
-    //   // TODO: 点单成功
-    //
-    // }
+    if (success) {
+      setSelectAddressVisible(false);
+      await vscode.postMessage({
+        type: MessageType.refresh,
+      });
+    }
   };
 
   const { data: dishesRes, loading } = useRequest<
