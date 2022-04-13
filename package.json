@@ -3,6 +3,11 @@
   "displayName": "vscode-meican",
   "license": "MIT",
   "icon": "images/meican.jpg",
+  "publisher": "await-ovo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/await-ovo/vscode-meican"
+  },
   "description": "",
   "version": "0.0.1",
   "engines": {

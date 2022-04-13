@@ -1,7 +1,7 @@
 # vscode-meican README
 
 <p align="center">
- <img src="./images/meican.jpg" width="100" alt="meican Logo" />
+ <img src="https://raw.githubusercontent.com/await-ovo/vscode-meican/main/images/meican.jpg" width="100" alt="meican Logo" />
 </p>
 
 
