@@ -8,8 +8,8 @@
     "type": "git",
     "url": "https://github.com/await-ovo/vscode-meican"
   },
-  "description": "",
-  "version": "0.0.1",
+  "description": "美餐 App VSCode 插件，支持登录、定时提醒点餐，浏览订单状态、编码界面直接点餐等功能",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.65.0"
   },
