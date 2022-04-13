@@ -1,6 +1,8 @@
 {
   "name": "vscode-meican",
   "displayName": "vscode-meican",
+  "license": "MIT",
+  "icon": "images/meican.jpg",
   "description": "",
   "version": "0.0.1",
   "engines": {
