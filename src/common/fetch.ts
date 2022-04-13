@@ -36,6 +36,13 @@ export const fetch = async ({
 }): Promise<FetchResponse> => {
   const { context } = serviceStorage.getStore()!;
 
+  if (!context.globalState.get(GLOBAL_COOKIE_KEY)) {
+    return {
+      success: false,
+      message: '请先输入邮箱、密码登录',
+    };
+  }
+
   const reqHeaders: HeadersInit = {
     Accept: 'application/json',
     Cookie: context.globalState.get(GLOBAL_COOKIE_KEY) ?? '',

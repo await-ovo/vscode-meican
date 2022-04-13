@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import { vscode } from './vscode';
 import type { Message } from '@/service/types';
 import { MessageType } from '@/service/types';
+import { history } from '@/common/history';
 
 const callbacks: Record<
   string,
@@ -11,7 +12,7 @@ const callbacks: Record<
 > = {};
 
 window.addEventListener('message', ({ data }) => {
-  const { type, id, success, message } = data;
+  const { type, id, success, message, to } = data;
 
   if (!success) {
     toast.error(message);
@@ -19,6 +20,8 @@ window.addEventListener('message', ({ data }) => {
 
   if (type === MessageType.res && callbacks.hasOwnProperty(id)) {
     callbacks[id].resolve(data);
+  } else if (type === MessageType.redirect && to) {
+    history.push(to);
   }
 });
 

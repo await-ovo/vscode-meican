@@ -29,6 +29,7 @@ export enum MessageType {
   api = 'api-request',
   res = 'api-response',
   refresh = 'refresh-webview',
+  redirect = 'redirect-route',
 }
 
 export type MessageResponse = {

@@ -43,7 +43,7 @@ export const login = async (
     headers: {
       Accept: '*/*',
       'Content-Type': ' application/x-www-form-urlencoded',
-      Host: ' meican.com',
+      Host: 'meican.com',
       Origin: 'https://meican.com',
       Referer: ' https://meican.com/login',
     },

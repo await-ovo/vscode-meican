@@ -28,7 +28,7 @@ const Login = () => {
     setLoading(false);
 
     if (success) {
-      history.push(PAGE_ROUTE_URL.profile);
+      history.push(PAGE_ROUTE_URL.index);
     }
   };
 

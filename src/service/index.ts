@@ -8,8 +8,8 @@ import type { Message, MessageResponse } from './types';
 import { refreshWebview } from '@/panel';
 
 const redirect = async (panel: WebviewPanel, to: string) => {
-  panel.webview.postMessage({
-    type: 'redirect',
+  await panel.webview.postMessage({
+    type: MessageType.redirect,
     to,
   });
 };
